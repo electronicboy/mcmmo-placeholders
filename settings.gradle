@@ -1,0 +1,5 @@
+rootProject.name = 'mcmmo-placeholders'
+include 'mcmmo-placeholders-plugin'
+include 'mcmmo-placeholders-bridge'
+include 'mcmmo-placeholders-bridge-2-1'
+

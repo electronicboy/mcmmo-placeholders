@@ -1,0 +1,9 @@
+name: mcmmo-placeholders
+author: electronicboy
+main: pw.valaria.placeholders.mcmmo.McmmoPlaceholderPlugin
+version: 1.0-SNAPSHOT
+api-version: "1.13" #be quiet
+
+depend:
+  - mcMMO
+  - PlaceholderAPI

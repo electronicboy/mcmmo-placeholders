@@ -1,0 +1,40 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
+group 'pw.valaria'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://papermc.io/repo/repository/maven-public/'}
+    maven { url = 'http://repo.extendedclip.com/content/repositories/placeholderapi/'}
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compileOnly("com.destroystokyo.paper:paper-api:1.14.2-R0.1-SNAPSHOT")
+    compileOnly("me.clip:placeholderapi:2.9.2")
+    implementation project(":mcmmo-placeholders-bridge-2-1")
+}
+
+
+shadowJar {
+    classifier = null
+    //configurations = [project.configurations.compile]
+}
+
+build.dependsOn shadowJar
