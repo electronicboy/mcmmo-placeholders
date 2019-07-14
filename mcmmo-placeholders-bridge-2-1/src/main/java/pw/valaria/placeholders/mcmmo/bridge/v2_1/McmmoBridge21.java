@@ -61,12 +61,6 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
             skills.put(skillType.getName().toLowerCase(), new SkillType(skillType));
         }
 
-
-        for (Map.Entry<String, SkillType> stringSkillTypeEntry : skills.entrySet()) {
-            LOGGER.info(stringSkillTypeEntry.toString());
-        }
-
-
         skills.values().forEach((skill) -> {
             // %mcmmo_level_<skillname>%
             getExpansion().registerPlaceholder(new SkillLevelPlaceholder(this, skill));

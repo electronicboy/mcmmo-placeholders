@@ -47,6 +47,5 @@ public class McMMOPlaceholderExpansion extends PlaceholderExpansion {
         if (registered != null) throw new IllegalStateException("Placeholder " + placeholder.getName() + " is already registered!");
 
         placeholders.put(placeholder.getName(), placeholder);
-        System.out.println("registered: " + placeholder.getName());
     }
 }
