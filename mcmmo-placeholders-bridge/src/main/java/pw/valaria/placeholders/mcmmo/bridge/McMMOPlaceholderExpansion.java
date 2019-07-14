@@ -31,6 +31,11 @@ public class McMMOPlaceholderExpansion extends PlaceholderExpansion {
     }
 
     @Override
+    public String getRequiredPlugin() {
+        return "mcMMO";
+    }
+
+    @Override
     public String onPlaceholderRequest(Player p, String params) {
          Placeholder placeholder = placeholders.get(params);
 
