@@ -54,8 +54,7 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
     }
 
     @Override
-    public void init() {
-        super.init();
+    protected void init() {
         // Register all skills
         for (PrimarySkillType skillType : PrimarySkillType.values()) {
             skills.put(skillType.getName().toLowerCase(), new SkillType(skillType));

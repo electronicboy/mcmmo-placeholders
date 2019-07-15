@@ -7,16 +7,19 @@ import java.util.Collection;
 import pw.valaria.placeholders.mcmmo.bridge.data.ISkillType;
 
 public abstract class McmmoBridge<S extends ISkillType> {
-    McMMOPlaceholderExpansion expansion = new McMMOPlaceholderExpansion();
+    McMMOPlaceholderExpansion expansion;
 
     /**
      * @return Can this IMPL hook the current version of mcmmo
      */
     protected abstract boolean canHook();
 
-    public void init() {
-        new McMMOPlaceholderExpansion();
+    public void init(McMMOPlaceholderExpansion expansion) {
+        this.expansion = expansion;
+        this.init();
     }
+
+    protected abstract void init();
 
     public abstract Collection<S> getSkills();
 

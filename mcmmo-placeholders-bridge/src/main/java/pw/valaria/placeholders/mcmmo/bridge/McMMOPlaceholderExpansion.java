@@ -14,6 +14,14 @@ public class McMMOPlaceholderExpansion extends PlaceholderExpansion {
 
     public McMMOPlaceholderExpansion() {
         register();
+
+        try {
+            final Class<? extends McmmoBridge> aClass = (Class<? extends McmmoBridge>) Class.forName("pw.valaria.placeholders.mcmmo.bridge.v2_1.McmmoBridge21");
+            aClass.newInstance().init(this);
+
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+        }
     }
     @Override
     public String getIdentifier() {
