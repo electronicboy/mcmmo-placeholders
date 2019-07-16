@@ -20,6 +20,6 @@ public class XpEventActivePlaceholder implements Placeholder {
 
     @Override
     public String getName() {
-        return "xp_event_active";
+        return "is_xp_event_active";
     }
 }

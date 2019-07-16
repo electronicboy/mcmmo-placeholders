@@ -76,7 +76,9 @@ public abstract class McmmoBridge<S extends ISkillType> {
         // %mcmmo_party_size%
         getExpansion().registerPlaceholder(new PartySizePlaceholder(this));
 
+        // %mcmmo_is_xp_event_active%
         getExpansion().registerPlaceholder(new XpEventActivePlaceholder(this));
+        // %mcmmo_xprate%
         getExpansion().registerPlaceholder(new XpRatePlaceholder(this));
     };
 
