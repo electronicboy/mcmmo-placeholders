@@ -12,11 +12,18 @@ public class PartyIsLeaderPlaceholder implements Placeholder {
         this.bridge = bridge;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String process(Player player) {
         String leader = bridge.getPartyLeader(player);
         return (leader.equals(player.getName())) ? "true" : "false";
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return "is_party_leader";

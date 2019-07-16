@@ -29,6 +29,7 @@ dependencies {
     compileOnly("com.destroystokyo.paper:paper-api:1.14.2-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.9.2")
     implementation project(":mcmmo-placeholders-bridge-2-1")
+    implementation project(":mcmmo-placeholders-bridge-classic")
 }
 
 

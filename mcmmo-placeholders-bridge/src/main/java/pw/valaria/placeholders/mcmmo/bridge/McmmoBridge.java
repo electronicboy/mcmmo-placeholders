@@ -22,7 +22,6 @@ import pw.valaria.placeholders.mcmmo.bridge.placeholders.XpRatePlaceholder;
 
 public abstract class McmmoBridge<S extends ISkillType> {
     McMMOPlaceholderExpansion expansion;
-
     /**
      * @return Can this IMPL hook the current version of mcmmo
      */

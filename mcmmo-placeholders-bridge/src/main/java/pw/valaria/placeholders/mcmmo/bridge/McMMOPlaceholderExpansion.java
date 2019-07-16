@@ -1,5 +1,7 @@
 package pw.valaria.placeholders.mcmmo.bridge;
 
+import com.google.common.collect.ImmutableList;
+
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -15,14 +17,27 @@ public class McMMOPlaceholderExpansion extends PlaceholderExpansion {
     public McMMOPlaceholderExpansion() {
         register();
 
-        try {
-            final Class<? extends McmmoBridge> aClass = (Class<? extends McmmoBridge>) Class.forName("pw.valaria.placeholders.mcmmo.bridge.v2_1.McmmoBridge21");
-            aClass.newInstance().init(this);
+        // TODO: Classpath scanner?
+        final ImmutableList<String> knownClasses = ImmutableList.<String>builder()
+                                                           .add("pw.valaria.placeholders.mcmmo.bridge.classic.McmmoBridgeClassic")
+                                                           .add("pw.valaria.placeholders.mcmmo.bridge.v2_1.McmmoBridge21")
+                                                           .build();
 
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
+        for (String knownClass : knownClasses) {
+            try {
+                final Class<? extends McmmoBridge> aClass = (Class<? extends McmmoBridge>) Class.forName(knownClass);
+                final McmmoBridge mcmmoBridge = aClass.newInstance();
+                if (mcmmoBridge.canHook()) {
+                    mcmmoBridge.init(this);
+                    return;
+                }
+            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ignored) {
+            }
         }
+
+        throw new IllegalStateException("Did not find a valid bridge! Are you using a supported version of mcmmo?");
     }
+
     @Override
     public String getIdentifier() {
         return "mcmmo";
@@ -45,19 +60,19 @@ public class McMMOPlaceholderExpansion extends PlaceholderExpansion {
 
     @Override
     public String onPlaceholderRequest(Player p, String params) {
-         Placeholder placeholder = placeholders.get(params);
+        Placeholder placeholder = placeholders.get(params);
 
-        System.out.println(params);
-         if (placeholder != null) {
-             return placeholder.process(p);
-         } else {
-             return null;
-         }
+        if (placeholder != null) {
+            return placeholder.process(p);
+        } else {
+            return null;
+        }
     }
 
     public void registerPlaceholder(Placeholder placeholder) {
         final Placeholder registered = placeholders.get(placeholder.getName());
-        if (registered != null) throw new IllegalStateException("Placeholder " + placeholder.getName() + " is already registered!");
+        if (registered != null)
+            throw new IllegalStateException("Placeholder " + placeholder.getName() + " is already registered!");
 
         placeholders.put(placeholder.getName(), placeholder);
     }

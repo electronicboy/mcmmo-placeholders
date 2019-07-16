@@ -1,32 +1,40 @@
-package pw.valaria.placeholders.mcmmo.bridge.v2_1;
+package pw.valaria.placeholders.mcmmo.bridge.classic;
 
 import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.config.Config;
 import com.gmail.nossr50.config.experience.ExperienceConfig;
 import com.gmail.nossr50.datatypes.party.Party;
 import com.gmail.nossr50.datatypes.player.McMMOPlayer;
-import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
 import com.gmail.nossr50.mcMMO;
 import com.gmail.nossr50.util.player.UserManager;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import me.clip.placeholderapi.PlaceholderAPIPlugin;
 import pw.valaria.placeholders.mcmmo.bridge.McmmoBridge;
 import pw.valaria.placeholders.mcmmo.bridge.data.ISkillType;
-import pw.valaria.placeholders.mcmmo.bridge.v2_1.data.SkillType;
+import pw.valaria.placeholders.mcmmo.bridge.classic.data.SkillType;
 
-public class McmmoBridge21 extends McmmoBridge<SkillType> {
+public class McmmoBridgeClassic extends McmmoBridge<SkillType> {
+    private static Logger LOGGER = LogManager.getLogManager().getLogger("mcmmo-placeholders");
 
+    private final mcMMO mcMMOPlugin;
     private final Map<String, SkillType> skills = new LinkedHashMap<>();
+
+    public McmmoBridgeClassic() {
+        mcMMOPlugin = (mcMMO) Bukkit.getPluginManager().getPlugin("mcMMO");
+    }
 
     protected boolean canHook() {
         try {
-            Class.forName("com.gmail.nossr50.datatypes.skills.PrimarySkillType");
+            Class.forName("com.gmail.nossr50.datatypes.skills.SkillType");
         } catch (ClassNotFoundException e) {
             return false;
         }
@@ -37,7 +45,7 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
     @Override
     protected void init() {
         // Register all skills
-        for (PrimarySkillType skillType : PrimarySkillType.values()) {
+        for (com.gmail.nossr50.datatypes.skills.SkillType skillType: com.gmail.nossr50.datatypes.skills.SkillType.values()) {
             skills.put(skillType.getName().toLowerCase(), new SkillType(skillType));
         }
 
@@ -57,14 +65,14 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
     public Integer getSkillLevel(ISkillType skillType, Player player) {
         final McMMOPlayer user = UserManager.getPlayer(player);
         if (user == null) return null;
-        return user.getSkillLevel((PrimarySkillType) skillType.getNativeSkill());
+        return user.getSkillLevel((com.gmail.nossr50.datatypes.skills.SkillType) skillType.getNativeSkill());
     }
 
     @Override
     public Integer getExpNeeded(ISkillType skillType, Player player) {
         final McMMOPlayer user = UserManager.getPlayer(player);
         if (user == null) return null;
-        return user.getXpToLevel((PrimarySkillType) skillType.getNativeSkill());
+        return user.getXpToLevel((com.gmail.nossr50.datatypes.skills.SkillType) skillType.getNativeSkill());
     }
 
     @Override
@@ -72,7 +80,7 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
         final McMMOPlayer user = UserManager.getPlayer(player);
         if (user == null) return null;
 
-        return user.getSkillXpLevel((PrimarySkillType) skill.getNativeSkill());
+        return user.getSkillXpLevel((com.gmail.nossr50.datatypes.skills.SkillType) skill.getNativeSkill());
     }
 
 
@@ -80,8 +88,8 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
     public Integer getExpRemaining(ISkillType skillType, Player player) {
         final McMMOPlayer user = UserManager.getPlayer(player);
         if (user == null) return null;
-        int current = user.getSkillXpLevel((PrimarySkillType) skillType.getNativeSkill());
-        int needed = user.getXpToLevel((PrimarySkillType) skillType.getNativeSkill());
+        int current = user.getSkillXpLevel((com.gmail.nossr50.datatypes.skills.SkillType) skillType.getNativeSkill());
+        int needed = user.getXpToLevel((com.gmail.nossr50.datatypes.skills.SkillType) skillType.getNativeSkill());
 
         return needed - current;
     }
