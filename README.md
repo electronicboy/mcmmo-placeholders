@@ -8,7 +8,8 @@ Development builds are here: https://atlas.valaria.pw/jenkins/view/Plugins/job/m
 
 
 #placeholders
-| placeholder                       | description                                                         |
+
+| placeholder                       | description                                      |
 |-----------------------------------|--------------------------------------------------|
 | mcmmo_level_<skillname>           | skill level                                      |
 | mcmmo_rank_<skillname>            | Players current rank for the skill               |
