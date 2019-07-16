@@ -2,6 +2,7 @@ package pw.valaria.placeholders.mcmmo.bridge.v2_1;
 
 import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.config.Config;
+import com.gmail.nossr50.config.experience.ExperienceConfig;
 import com.gmail.nossr50.datatypes.party.Party;
 import com.gmail.nossr50.datatypes.player.McMMOPlayer;
 import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
@@ -17,20 +18,10 @@ import java.util.Map;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import me.clip.placeholderapi.PlaceholderAPI;
+import me.clip.placeholderapi.PlaceholderAPIPlugin;
 import pw.valaria.placeholders.mcmmo.bridge.McmmoBridge;
 import pw.valaria.placeholders.mcmmo.bridge.data.ISkillType;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyIsLeaderPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyIsMemberPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyLeaderPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyNamePlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartySizePlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.PowerLevelCapPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.PowerLevelPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillExpNeededPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillExpPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillExpRemainingPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillLevelPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillRankPlaceholder;
 import pw.valaria.placeholders.mcmmo.bridge.v2_1.data.SkillType;
 
 public class McmmoBridge21 extends McmmoBridge<SkillType> {
@@ -60,44 +51,7 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
             skills.put(skillType.getName().toLowerCase(), new SkillType(skillType));
         }
 
-        skills.values().forEach((skill) -> {
-            // %mcmmo_level_<skillname>%
-            getExpansion().registerPlaceholder(new SkillLevelPlaceholder(this, skill));
 
-            //%mcmmo_xp_needed_<skillname>%
-            getExpansion().registerPlaceholder(new SkillExpNeededPlaceholder(this, skill));
-
-            //%mcmmo_xp_<skillname>%
-            getExpansion().registerPlaceholder(new SkillExpPlaceholder(this, skill));
-
-            //%mcmmo_xp_remaining_<skillname>%
-            getExpansion().registerPlaceholder(new SkillExpRemainingPlaceholder(this, skill));
-
-            //%mcmmo_rank_<skillname>%
-            getExpansion().registerPlaceholder(new SkillRankPlaceholder(this, skill));
-        });
-
-
-        //%mcmmo_power_level%
-        getExpansion().registerPlaceholder(new PowerLevelPlaceholder(this));
-
-        // %mcmmo_power_level_cap%
-        getExpansion().registerPlaceholder(new PowerLevelCapPlaceholder(this));
-
-        // %mcmmo_in_party%
-        getExpansion().registerPlaceholder(new PartyIsMemberPlaceholder(this));
-
-        /// %mcmmo_party_name%
-        getExpansion().registerPlaceholder(new PartyNamePlaceholder(this));
-
-        // %mcmmo_is_party_leader%
-        getExpansion().registerPlaceholder(new PartyIsLeaderPlaceholder(this));
-
-        // %mcmmo_party_leader%
-        getExpansion().registerPlaceholder(new PartyLeaderPlaceholder(this));
-
-        // %mcmmo_party_size%
-        getExpansion().registerPlaceholder(new PartySizePlaceholder(this));
     }
 
     @Override
@@ -186,6 +140,16 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
         if (user == null) return null;
         final Party party = user.getParty();
         return (party == null) ? null : party.getMembers().size();
+    }
+
+    @Override
+    public String getXpRate(Player player) {
+        return String.valueOf(ExperienceConfig.getInstance().getExperienceGainsGlobalMultiplier());
+    }
+
+    @Override
+    public String isExpEventActive(Player player) {
+        return mcMMO.p.isXPEventEnabled() ? PlaceholderAPIPlugin.booleanTrue() : PlaceholderAPIPlugin.booleanFalse();
     }
 
 

@@ -5,6 +5,20 @@ import org.bukkit.entity.Player;
 import java.util.Collection;
 
 import pw.valaria.placeholders.mcmmo.bridge.data.ISkillType;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyIsLeaderPlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyIsMemberPlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyLeaderPlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyNamePlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartySizePlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.PowerLevelCapPlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.PowerLevelPlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillExpNeededPlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillExpPlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillExpRemainingPlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillLevelPlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillRankPlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.XpEventActivePlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.XpRatePlaceholder;
 
 public abstract class McmmoBridge<S extends ISkillType> {
     McMMOPlaceholderExpansion expansion;
@@ -17,7 +31,54 @@ public abstract class McmmoBridge<S extends ISkillType> {
     public void init(McMMOPlaceholderExpansion expansion) {
         this.expansion = expansion;
         this.init();
+        // Use postInit to create placeholders, etc
+        this.postInit();
     }
+
+    protected void postInit() {
+
+        getSkills().forEach((skill) -> {
+            // %mcmmo_level_<skillname>%
+            getExpansion().registerPlaceholder(new SkillLevelPlaceholder(this, skill));
+
+            //%mcmmo_xp_needed_<skillname>%
+            getExpansion().registerPlaceholder(new SkillExpNeededPlaceholder(this, skill));
+
+            //%mcmmo_xp_<skillname>%
+            getExpansion().registerPlaceholder(new SkillExpPlaceholder(this, skill));
+
+            //%mcmmo_xp_remaining_<skillname>%
+            getExpansion().registerPlaceholder(new SkillExpRemainingPlaceholder(this, skill));
+
+            //%mcmmo_rank_<skillname>%
+            getExpansion().registerPlaceholder(new SkillRankPlaceholder(this, skill));
+        });
+
+
+        //%mcmmo_power_level%
+        getExpansion().registerPlaceholder(new PowerLevelPlaceholder(this));
+
+        // %mcmmo_power_level_cap%
+        getExpansion().registerPlaceholder(new PowerLevelCapPlaceholder(this));
+
+        // %mcmmo_in_party%
+        getExpansion().registerPlaceholder(new PartyIsMemberPlaceholder(this));
+
+        /// %mcmmo_party_name%
+        getExpansion().registerPlaceholder(new PartyNamePlaceholder(this));
+
+        // %mcmmo_is_party_leader%
+        getExpansion().registerPlaceholder(new PartyIsLeaderPlaceholder(this));
+
+        // %mcmmo_party_leader%
+        getExpansion().registerPlaceholder(new PartyLeaderPlaceholder(this));
+
+        // %mcmmo_party_size%
+        getExpansion().registerPlaceholder(new PartySizePlaceholder(this));
+
+        getExpansion().registerPlaceholder(new XpEventActivePlaceholder(this));
+        getExpansion().registerPlaceholder(new XpRatePlaceholder(this));
+    };
 
     protected abstract void init();
 
@@ -46,4 +107,8 @@ public abstract class McmmoBridge<S extends ISkillType> {
     public abstract String getPartyLeader(Player player);
 
     public abstract Integer getPartySize(Player player);
+
+    public abstract String getXpRate(Player player);
+
+    public abstract String isExpEventActive(Player player);
 }
