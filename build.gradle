@@ -1,3 +1,18 @@
-group 'pw.valaria'
-version '1.0-SNAPSHOT'
 
+allprojects {
+
+    group = 'pw.valaria'
+    version = '1.0.1-SNAPSHOT'
+}
+
+subprojects {
+    apply plugin:'java'
+    sourceCompatibility = 1.8
+    repositories {
+        mavenCentral()
+        maven { url = 'http://repo.extendedclip.com/content/repositories/placeholderapi/'}
+        maven { url = 'https://repo.valaria.pw/repository/maven-snapshots' }
+        maven { url = 'https://papermc.io/repo/repository/maven-public/'}
+        maven { url = 'https://maven.sk89q.com/repo/' }
+    }
+}
