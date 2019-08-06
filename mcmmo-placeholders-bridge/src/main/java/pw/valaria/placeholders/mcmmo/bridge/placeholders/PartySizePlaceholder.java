@@ -12,7 +12,7 @@ public class PartySizePlaceholder implements Placeholder {
     }
 
     @Override
-    public String process(Player player) {
+    public String process(Player player, String params) {
         Integer partySize = bridge.getPartySize(player);
         return (partySize == null) ? "" : partySize.toString();
     }

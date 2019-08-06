@@ -15,7 +15,7 @@ public class SkillExpRemainingPlaceholder implements Placeholder {
     }
 
     @Override
-    public String process(Player player) {
+    public String process(Player player, String params) {
         final Integer expRemaining = bridge.getExpRemaining(skill, player);
         return (expRemaining == null) ? "" : expRemaining.toString();
     }

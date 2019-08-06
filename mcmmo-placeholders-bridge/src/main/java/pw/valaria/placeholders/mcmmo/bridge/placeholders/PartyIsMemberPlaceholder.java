@@ -12,7 +12,7 @@ public class PartyIsMemberPlaceholder implements Placeholder {
     }
 
     @Override
-    public String process(Player player) {
+    public String process(Player player, String params) {
         return (bridge.getPartyName(player) == null) ? "false" : "true";
     }
 

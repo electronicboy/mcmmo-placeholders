@@ -13,7 +13,7 @@ public class PartyLeaderPlaceholder implements Placeholder {
     }
 
     @Override
-    public String process(Player player) {
+    public String process(Player player, String params) {
         return StringUtils.stripToEmpty(bridge.getPartyLeader(player));
     }
 

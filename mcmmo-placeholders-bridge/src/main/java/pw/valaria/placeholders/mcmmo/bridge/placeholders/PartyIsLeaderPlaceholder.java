@@ -16,7 +16,7 @@ public class PartyIsLeaderPlaceholder implements Placeholder {
      * {@inheritDoc}
      */
     @Override
-    public String process(Player player) {
+    public String process(Player player, String params) {
         String leader = bridge.getPartyLeader(player);
         return (leader.equals(player.getName())) ? "true" : "false";
     }

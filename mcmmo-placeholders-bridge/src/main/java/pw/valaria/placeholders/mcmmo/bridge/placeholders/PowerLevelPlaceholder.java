@@ -12,7 +12,7 @@ public class PowerLevelPlaceholder implements Placeholder {
     }
 
     @Override
-    public String process(Player player) {
+    public String process(Player player, String params) {
         Integer powerLevel = bridge.getPowerLevel(player);
         return (powerLevel == null) ? "" : powerLevel.toString();
     }

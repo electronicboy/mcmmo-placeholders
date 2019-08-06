@@ -60,10 +60,21 @@ public class McMMOPlaceholderExpansion extends PlaceholderExpansion {
 
     @Override
     public String onPlaceholderRequest(Player p, String params) {
-        Placeholder placeholder = placeholders.get(params);
+        String token;
+        String data = null;
+        int dataPosition = params.indexOf(":");
+
+        if (dataPosition != -1) {
+            token = params.substring(0, dataPosition);
+            data = params.substring(dataPosition + 1);
+        } else {
+            token = params;
+        }
+
+        Placeholder placeholder = placeholders.get(token);
 
         if (placeholder != null) {
-            return placeholder.process(p);
+            return placeholder.process(p, data);
         } else {
             return null;
         }

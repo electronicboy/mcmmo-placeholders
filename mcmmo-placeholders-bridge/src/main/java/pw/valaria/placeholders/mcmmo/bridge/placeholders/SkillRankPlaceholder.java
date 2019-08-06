@@ -15,7 +15,7 @@ public class SkillRankPlaceholder implements Placeholder {
     }
 
     @Override
-    public String process(Player player) {
+    public String process(Player player, String params) {
         Integer rank = bridge.getRank(skill, player);
         return (rank == null) ? "" : rank.toString();
     }

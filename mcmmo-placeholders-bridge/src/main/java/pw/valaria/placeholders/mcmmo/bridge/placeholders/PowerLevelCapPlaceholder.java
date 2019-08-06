@@ -12,7 +12,7 @@ public class PowerLevelCapPlaceholder implements Placeholder {
     }
 
     @Override
-    public String process(Player player) {
+    public String process(Player player, String params) {
         Integer cap = bridge.getPowerCap(player);
         return (cap == null) ? "" : cap.toString();
     }

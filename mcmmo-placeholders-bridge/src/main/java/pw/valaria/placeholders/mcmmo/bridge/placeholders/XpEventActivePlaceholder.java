@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 
 import pw.valaria.placeholders.mcmmo.bridge.McmmoBridge;
 import pw.valaria.placeholders.mcmmo.bridge.data.ISkillType;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.Placeholder;
 
 public class XpEventActivePlaceholder implements Placeholder {
     private McmmoBridge bridge;
@@ -14,7 +13,7 @@ public class XpEventActivePlaceholder implements Placeholder {
     }
 
     @Override
-    public String process(Player player) {
+    public String process(Player player, String params) {
         return bridge.isExpEventActive(player);
     }
 

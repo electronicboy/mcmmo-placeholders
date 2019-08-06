@@ -15,7 +15,7 @@ public class SkillLevelPlaceholder implements Placeholder {
     }
 
     @Override
-    public String process(Player p) {
+    public String process(Player p, String params) {
         final Integer skillLevel = bridge.getSkillLevel(skillType, p);
         return (skillLevel == null) ? "" : skillLevel.toString();
     }
