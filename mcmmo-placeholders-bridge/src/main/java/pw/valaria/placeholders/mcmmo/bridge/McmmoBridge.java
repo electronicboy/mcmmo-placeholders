@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import java.util.Collection;
 
 import pw.valaria.placeholders.mcmmo.bridge.data.ISkillType;
+import pw.valaria.placeholders.mcmmo.bridge.data.LeaderboardStat;
 import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyIsLeaderPlaceholder;
 import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyIsMemberPlaceholder;
 import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyLeaderPlaceholder;
@@ -15,6 +16,7 @@ import pw.valaria.placeholders.mcmmo.bridge.placeholders.PowerLevelPlaceholder;
 import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillExpNeededPlaceholder;
 import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillExpPlaceholder;
 import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillExpRemainingPlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillLeaderboardPlaceholder;
 import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillLevelPlaceholder;
 import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillRankPlaceholder;
 import pw.valaria.placeholders.mcmmo.bridge.placeholders.XpEventActivePlaceholder;
@@ -51,6 +53,9 @@ public abstract class McmmoBridge<S extends ISkillType> {
 
             //%mcmmo_rank_<skillname>%
             getExpansion().registerPlaceholder(new SkillRankPlaceholder(this, skill));
+
+            //%mcmmo_top_rank_<skillname>%
+            getExpansion().registerPlaceholder(new SkillLeaderboardPlaceholder(this, skill));
         });
 
 
@@ -112,4 +117,6 @@ public abstract class McmmoBridge<S extends ISkillType> {
     public abstract String getXpRate(Player player);
 
     public abstract String isExpEventActive(Player player);
+
+    public abstract LeaderboardStat getLeaderboardStat(ISkillType type, int rank);
 }

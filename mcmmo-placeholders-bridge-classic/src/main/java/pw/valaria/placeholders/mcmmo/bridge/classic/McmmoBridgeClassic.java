@@ -3,6 +3,7 @@ package pw.valaria.placeholders.mcmmo.bridge.classic;
 import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.config.Config;
 import com.gmail.nossr50.config.experience.ExperienceConfig;
+import com.gmail.nossr50.datatypes.database.PlayerStat;
 import com.gmail.nossr50.datatypes.party.Party;
 import com.gmail.nossr50.datatypes.player.McMMOPlayer;
 import com.gmail.nossr50.mcMMO;
@@ -13,6 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -21,6 +23,7 @@ import me.clip.placeholderapi.PlaceholderAPIPlugin;
 import pw.valaria.placeholders.mcmmo.bridge.McmmoBridge;
 import pw.valaria.placeholders.mcmmo.bridge.data.ISkillType;
 import pw.valaria.placeholders.mcmmo.bridge.classic.data.SkillType;
+import pw.valaria.placeholders.mcmmo.bridge.data.LeaderboardStat;
 
 public class McmmoBridgeClassic extends McmmoBridge<SkillType> {
     private static Logger LOGGER = LogManager.getLogManager().getLogger("mcmmo-placeholders");
@@ -148,6 +151,14 @@ public class McmmoBridgeClassic extends McmmoBridge<SkillType> {
     @Override
     public String isExpEventActive(Player player) {
         return mcMMO.p.isXPEventEnabled() ? PlaceholderAPIPlugin.booleanTrue() : PlaceholderAPIPlugin.booleanFalse();
+    }
+
+    @Override
+    public LeaderboardStat getLeaderboardStat(ISkillType type, int rank) {
+        final List<PlayerStat> playerStats = mcMMO.getDatabaseManager().readLeaderboard((com.gmail.nossr50.datatypes.skills.SkillType) type.getNativeSkill(), rank, 1);
+        if (playerStats.size() == 0) return null;
+        PlayerStat stat = playerStats.get(0);
+        return new LeaderboardStat(stat.name, stat.statVal);
     }
 
 
