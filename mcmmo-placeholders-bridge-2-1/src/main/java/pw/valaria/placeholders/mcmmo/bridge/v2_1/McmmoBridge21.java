@@ -7,6 +7,7 @@ import com.gmail.nossr50.datatypes.party.Party;
 import com.gmail.nossr50.datatypes.player.McMMOPlayer;
 import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
 import com.gmail.nossr50.mcMMO;
+import com.gmail.nossr50.util.Permissions;
 import com.gmail.nossr50.util.player.UserManager;
 
 import org.bukkit.entity.Player;
@@ -135,6 +136,32 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
     @Override
     public String getXpRate(Player player) {
         return String.valueOf(ExperienceConfig.getInstance().getExperienceGainsGlobalMultiplier());
+    }
+
+    @Override
+    public String getSkillXpRate(ISkillType skillType, Player player) {
+        final McMMOPlayer user = UserManager.getPlayer(player);
+        if (user == null) return null;
+
+        PrimarySkillType skill = (PrimarySkillType) skillType.getNativeSkill();
+        double modifier = 1.0F;
+
+        if (Permissions.customXpBoost(player, skill))
+            modifier = ExperienceConfig.getInstance().getCustomXpPerkBoost();
+        else if (Permissions.quadrupleXp(player, skill))
+            modifier = 4;
+        else if (Permissions.tripleXp(player, skill))
+            modifier = 3;
+        else if (Permissions.doubleAndOneHalfXp(player, skill))
+            modifier = 2.5;
+        else if (Permissions.doubleXp(player, skill))
+            modifier = 2;
+        else if (Permissions.oneAndOneHalfXp(player, skill))
+            modifier = 1.5;
+        else if (Permissions.oneAndOneTenthXp(player, skill))
+            modifier = 1.1;
+
+        return String.valueOf(modifier);
     }
 
     @Override
