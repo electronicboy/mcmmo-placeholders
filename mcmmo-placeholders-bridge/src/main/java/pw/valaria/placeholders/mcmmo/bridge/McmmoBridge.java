@@ -19,6 +19,7 @@ import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillLevelPlaceholder;
 import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillRankPlaceholder;
 import pw.valaria.placeholders.mcmmo.bridge.placeholders.XpEventActivePlaceholder;
 import pw.valaria.placeholders.mcmmo.bridge.placeholders.XpRatePlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillXpRatePlaceholder;
 
 public abstract class McmmoBridge<S extends ISkillType> {
     McMMOPlaceholderExpansion expansion;
@@ -51,6 +52,9 @@ public abstract class McmmoBridge<S extends ISkillType> {
 
             //%mcmmo_rank_<skillname>%
             getExpansion().registerPlaceholder(new SkillRankPlaceholder(this, skill));
+
+            //%mcmmo_xprate_<skillname>%
+            getExpansion().registerPlaceholder(new SkillXpRatePlaceholder(this, skill));
         });
 
 
@@ -110,6 +114,8 @@ public abstract class McmmoBridge<S extends ISkillType> {
     public abstract Integer getPartySize(Player player);
 
     public abstract String getXpRate(Player player);
+
+    public abstract String getSkillXpRate(ISkillType skill, Player player);
 
     public abstract String isExpEventActive(Player player);
 }
