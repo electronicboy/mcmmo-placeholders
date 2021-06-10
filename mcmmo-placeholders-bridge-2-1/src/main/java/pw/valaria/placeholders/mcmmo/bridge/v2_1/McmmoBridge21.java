@@ -1,7 +1,6 @@
 package pw.valaria.placeholders.mcmmo.bridge.v2_1;
 
 import com.gmail.nossr50.api.ExperienceAPI;
-import com.gmail.nossr50.config.Config;
 import com.gmail.nossr50.config.experience.ExperienceConfig;
 import com.gmail.nossr50.datatypes.party.Party;
 import com.gmail.nossr50.datatypes.player.McMMOPlayer;
@@ -41,18 +40,12 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
         for (PrimarySkillType skillType : PrimarySkillType.values()) {
             skills.put(skillType.getName().toLowerCase(), new SkillType(skillType));
         }
-
-
     }
 
     @Override
     public Collection<SkillType> getSkills() {
         return skills.values();
     }
-
-
-
-
 
     @Override
     public Integer getSkillLevel(ISkillType skillType, Player player) {
@@ -105,7 +98,7 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
 
     @Override
     public Integer getPowerCap(Player player) {
-        return Config.getInstance().getPowerLevelCap();
+        return mcMMO.p.getGeneralConfig().getPowerLevelCap();
     }
 
     @Override
@@ -131,6 +124,22 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
         if (user == null) return null;
         final Party party = user.getParty();
         return (party == null) ? null : party.getMembers().size();
+    }
+
+    @Override
+    public Float getPartyXp(Player player) {
+        final McMMOPlayer user = UserManager.getPlayer(player);
+        if (user == null) return null;
+        final Party party = user.getParty();
+        return (party == null) ? null : party.getXp();
+    }
+
+    @Override
+    public Integer getPartyLevel(Player player) {
+        final McMMOPlayer user = UserManager.getPlayer(player);
+        if (user == null) return null;
+        final Party party = user.getParty();
+        return (party == null) ? null : party.getLevel();
     }
 
     @Override
