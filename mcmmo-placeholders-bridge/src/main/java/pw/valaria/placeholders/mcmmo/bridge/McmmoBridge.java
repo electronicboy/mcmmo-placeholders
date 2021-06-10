@@ -5,21 +5,7 @@ import org.bukkit.entity.Player;
 import java.util.Collection;
 
 import pw.valaria.placeholders.mcmmo.bridge.data.ISkillType;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyIsLeaderPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyIsMemberPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyLeaderPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartyNamePlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.PartySizePlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.PowerLevelCapPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.PowerLevelPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillExpNeededPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillExpPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillExpRemainingPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillLevelPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillRankPlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.XpEventActivePlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.XpRatePlaceholder;
-import pw.valaria.placeholders.mcmmo.bridge.placeholders.SkillXpRatePlaceholder;
+import pw.valaria.placeholders.mcmmo.bridge.placeholders.*;
 
 public abstract class McmmoBridge<S extends ISkillType> {
     McMMOPlaceholderExpansion expansion;
@@ -79,6 +65,12 @@ public abstract class McmmoBridge<S extends ISkillType> {
         // %mcmmo_party_size%
         getExpansion().registerPlaceholder(new PartySizePlaceholder(this));
 
+        // %mcmmo_party_level%
+        getExpansion().registerPlaceholder(new PartyLevelPlaceholder(this));
+
+        // %mcmmo_party_xp%
+        getExpansion().registerPlaceholder(new PartyXpPlaceholder(this));
+
         // %mcmmo_is_xp_event_active%
         getExpansion().registerPlaceholder(new XpEventActivePlaceholder(this));
         // %mcmmo_xprate%
@@ -112,6 +104,10 @@ public abstract class McmmoBridge<S extends ISkillType> {
     public abstract String getPartyLeader(Player player);
 
     public abstract Integer getPartySize(Player player);
+
+    public abstract Float getPartyXp(Player player);
+
+    public abstract Integer getPartyLevel(Player player);
 
     public abstract String getXpRate(Player player);
 

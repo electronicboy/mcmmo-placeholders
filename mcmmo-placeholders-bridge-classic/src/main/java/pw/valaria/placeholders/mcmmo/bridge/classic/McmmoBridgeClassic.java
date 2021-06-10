@@ -58,10 +58,6 @@ public class McmmoBridgeClassic extends McmmoBridge<SkillType> {
         return skills.values();
     }
 
-
-
-
-
     @Override
     public Integer getSkillLevel(ISkillType skillType, Player player) {
         final McMMOPlayer user = UserManager.getPlayer(player);
@@ -139,6 +135,22 @@ public class McmmoBridgeClassic extends McmmoBridge<SkillType> {
         if (user == null) return null;
         final Party party = user.getParty();
         return (party == null) ? null : party.getMembers().size();
+    }
+
+    @Override
+    public Float getPartyXp(Player player) {
+        final McMMOPlayer user = UserManager.getOfflinePlayer(player);
+        if (user == null) return null;
+        final Party party = user.getParty();
+        return (party == null) ? null : party.getXp();
+    }
+
+    @Override
+    public Integer getPartyLevel(Player player) {
+        final McMMOPlayer user = UserManager.getPlayer(player);
+        if (user == null) return null;
+        final Party party = user.getParty();
+        return (party == null) ? null : party.getLevel();
     }
 
     @Override
