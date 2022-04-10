@@ -3,5 +3,5 @@ dependencies {
     compile project(":mcmmo-placeholders-bridge")
     compileOnly("com.destroystokyo.paper:paper-api:1.12.2-R0.1-SNAPSHOT")
     compileOnly("com.gmail.nossr50.mcMMO:mcMMO:1.6.5")
-    compileOnly("me.clip:placeholderapi:2.9.2")
+    compileOnly("me.clip:placeholderapi:2.11.1")
 }
