@@ -40,18 +40,12 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
         for (PrimarySkillType skillType : PrimarySkillType.values()) {
             skills.put(mcMMO.p.getSkillTools().getLocalizedSkillName(skillType).toLowerCase(), new SkillType(skillType));
         }
-
-
     }
 
     @Override
     public Collection<SkillType> getSkills() {
         return skills.values();
     }
-
-
-
-
 
     @Override
     public Integer getSkillLevel(ISkillType skillType, Player player) {
@@ -130,6 +124,22 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
         if (user == null) return null;
         final Party party = user.getParty();
         return (party == null) ? null : party.getMembers().size();
+    }
+
+    @Override
+    public Float getPartyXp(Player player) {
+        final McMMOPlayer user = UserManager.getPlayer(player);
+        if (user == null) return null;
+        final Party party = user.getParty();
+        return (party == null) ? null : party.getXp();
+    }
+
+    @Override
+    public Integer getPartyLevel(Player player) {
+        final McMMOPlayer user = UserManager.getPlayer(player);
+        if (user == null) return null;
+        final Party party = user.getParty();
+        return (party == null) ? null : party.getLevel();
     }
 
     @Override
