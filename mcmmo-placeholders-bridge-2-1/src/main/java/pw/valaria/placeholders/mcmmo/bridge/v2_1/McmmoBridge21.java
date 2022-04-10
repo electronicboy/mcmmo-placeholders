@@ -38,7 +38,7 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
     protected void init() {
         // Register all skills
         for (PrimarySkillType skillType : PrimarySkillType.values()) {
-            skills.put(skillType.getName().toLowerCase(), new SkillType(skillType));
+            skills.put(mcMMO.p.getSkillTools().getLocalizedSkillName(skillType).toLowerCase(), new SkillType(skillType));
         }
     }
 
