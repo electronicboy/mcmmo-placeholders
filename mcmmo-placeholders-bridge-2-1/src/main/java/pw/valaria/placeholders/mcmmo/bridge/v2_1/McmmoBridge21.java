@@ -1,7 +1,6 @@
 package pw.valaria.placeholders.mcmmo.bridge.v2_1;
 
 import com.gmail.nossr50.api.ExperienceAPI;
-import com.gmail.nossr50.config.Config;
 import com.gmail.nossr50.config.experience.ExperienceConfig;
 import com.gmail.nossr50.datatypes.party.Party;
 import com.gmail.nossr50.datatypes.player.McMMOPlayer;
@@ -39,7 +38,7 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
     protected void init() {
         // Register all skills
         for (PrimarySkillType skillType : PrimarySkillType.values()) {
-            skills.put(skillType.getName().toLowerCase(), new SkillType(skillType));
+            skills.put(mcMMO.p.getSkillTools().getLocalizedSkillName(skillType).toLowerCase(), new SkillType(skillType));
         }
 
 
@@ -105,7 +104,7 @@ public class McmmoBridge21 extends McmmoBridge<SkillType> {
 
     @Override
     public Integer getPowerCap(Player player) {
-        return Config.getInstance().getPowerLevelCap();
+        return mcMMO.p.getGeneralConfig().getPowerLevelCap();
     }
 
     @Override
